@@ -111,4 +111,13 @@ class DocClassifier:
 
     @staticmethod
     def _keyword_score(text: str, keywords: list[str]) -> int:
-        return sum(1 for kw in keywords if kw in text)
+        text_lower = text.lower()
+        count = 0
+        for kw in keywords:
+            if kw in text_lower:
+                count += 1
+            # Also match with hyphen or underscore replaced
+            kw_underscore = kw.replace(" ", "")
+            if kw_underscore in text_lower.replace(" ", "").replace("-", ""):
+                count += 1
+        return count

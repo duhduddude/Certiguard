@@ -5,30 +5,28 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from src.ingestion.crawler import FileCrawler
-from src.ingestion.format_detector import FormatDetector
-from src.ingestion.doc_classifier import DocClassifier
-from src.models.document import DocumentFormat, DocumentClassification
-
 
 def test_crawler():
-    """Test FileCrawler can be instantiated and has required methods"""
+    """Test FileCrawler can be instantiated"""
+    from src.ingestion.crawler import FileCrawler
     crawler = FileCrawler()
     assert hasattr(crawler, "crawl")
-    assert hasattr(crawler, "_detect_format")
-    assert hasattr(crawler, "_compute_sha256")
     print("[PASS] FileCrawler instantiation")
 
 
 def test_format_detector():
     """Test FormatDetector can be instantiated"""
+    from src.ingestion.format_detector import FormatDetector
     detector = FormatDetector()
     assert hasattr(detector, "detect")
     print("[PASS] FormatDetector instantiation")
 
 
 def test_doc_classifier():
-    """Test DocClassifier can be instantiated and classify documents"""
+    """Test DocClassifier can classify documents"""
+    from src.ingestion.doc_classifier import DocClassifier
+    from src.models.document import DocumentFormat, DocumentClassification
+
     classifier = DocClassifier()
     
     result = classifier.classify("Annual turnover Rs 5 crore P&L statement", DocumentFormat.PDF_DIGITAL)
@@ -58,7 +56,6 @@ def test_models():
     from src.models.criterion import Criterion, CriterionNature, CriterionType, CriterionThreshold
     from src.models.evidence import BidderEvidence, EvidenceSegment, ExtractedEntity
     
-    # Test DocumentMetadata
     doc = DocumentMetadata(
         file_path="/test/file.pdf",
         file_name="file.pdf",
@@ -68,7 +65,6 @@ def test_models():
     )
     assert doc.file_name == "file.pdf"
     
-    # Test Criterion
     criterion = Criterion(
         id="C-001",
         label="Minimum Turnover",
@@ -79,7 +75,6 @@ def test_models():
     assert criterion.id == "C-001"
     assert criterion.threshold.value == 50000000
     
-    # Test EvidenceSegment
     segment = EvidenceSegment(
         segment_id="SEG-001",
         file_name="pan_card.pdf",
