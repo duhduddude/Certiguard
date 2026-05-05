@@ -71,11 +71,3 @@ src/
 | `POST` | `/override/apply` | Apply human override |
 | `GET` | `/audit/records` | Get audit records |
 | `GET` | `/report/generate` | Generate evaluation report |
-
-## Documentation
-
-For full project documentation, see the main CertiGuard repository.
-
-## License
-
-Internal use only — CRPF Government Procurement
